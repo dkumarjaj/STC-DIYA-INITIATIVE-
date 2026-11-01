@@ -50,7 +50,7 @@ textarea {
 }
 .ambient-two {
   top: 900px;
-  right: -350px;
+  /* right: -350px; */
   background: #a56c31;
 }
 .topbar {

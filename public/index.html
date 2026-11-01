@@ -10,6 +10,159 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
+
+  <style>
+    /* Responsive layout overrides */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { min-width: 320px; overflow-x: hidden; }
+    img, video, canvas { max-width: 100%; }
+    .topbar, main, .footer {
+      width: min(100% - 48px, 1240px);
+      margin-inline: auto;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand { min-width: 0; }
+    .brand span { min-width: 0; }
+    .top-nav { display: flex; align-items: center; justify-content: flex-end; gap: 18px; flex-wrap: wrap; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr);
+      align-items: center;
+      gap: clamp(24px, 5vw, 72px);
+    }
+    .hero-copy, .hero-art, .manifesto-content, .digital-copy,
+    .digital-stage, .video-copy, .idea-list, .submission-form {
+      min-width: 0;
+    }
+    .hero-art { width: 100%; }
+    .pledge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .how-layout, .digital-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: clamp(24px, 5vw, 64px);
+      align-items: center;
+    }
+    .video-ideas, .whatsapp-section {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: clamp(24px, 5vw, 64px);
+      align-items: center;
+    }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .field-full { grid-column: 1 / -1; }
+    .field input, .field textarea, .field select { width: 100%; max-width: 100%; min-width: 0; }
+    .dropzone, .preview-wrap, .preview-wrap img, .preview-wrap video { max-width: 100%; }
+    .preview-wrap img, .preview-wrap video {
+      display: block;
+      width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+    }
+    .certificate-dialog {
+      width: min(100% - 28px, 980px);
+      max-height: calc(100dvh - 28px);
+      overflow-y: auto;
+    }
+    #certificateCanvas { display: block; width: 100%; height: auto; }
+    .certificate-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .certificate-actions .btn { flex: 1 1 180px; }
+    .footer-brand { min-width: 0; }
+
+    @media (max-width: 900px) {
+      .topbar, main, .footer { width: min(100% - 36px, 760px); }
+      .hero { grid-template-columns: minmax(0, 1fr) minmax(220px, .8fr); gap: 24px; }
+      .pledge-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .how-layout, .digital-layout, .video-ideas, .whatsapp-section {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar, main, .footer { width: calc(100% - 32px); }
+      .topbar { padding-block: 12px; align-items: flex-start; }
+      .school-logo { width: 42px; height: 42px; object-fit: contain; flex: 0 0 auto; }
+      .brand { display: flex; align-items: center; gap: 10px; }
+      .brand strong { font-size: 13px; }
+      .brand small { display: block; font-size: 9px; line-height: 1.35; }
+      .top-nav { gap: 8px; }
+      .top-link { font-size: 11px; line-height: 1.35; }
+      .top-nav .top-link:first-child { display: none; }
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+        padding-top: 32px;
+      }
+      .hero-copy { text-align: left; }
+      .hero h1 { font-size: clamp(42px, 12vw, 62px); line-height: .98; }
+      .hero-text { max-width: 56ch; font-size: 15px; }
+      .hero-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+      .hero-actions .btn, .hero-actions .text-link { width: 100%; text-align: center; justify-content: center; }
+      .hero-art { min-height: 300px; max-width: 440px; margin-inline: auto; }
+      .section { padding-block: 54px; }
+      .section-heading { display: grid; grid-template-columns: 1fr; gap: 12px; }
+      .section-heading h2, .how h2, .video-copy h2, .digital-copy h2,
+      .whatsapp-section h2 { font-size: clamp(32px, 9vw, 46px); }
+      .pledge-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+      .pledge-card { padding: 22px; }
+      .how-layout, .digital-layout, .video-ideas, .whatsapp-section {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 26px;
+      }
+      .steps { width: 100%; }
+      .idea-list { width: 100%; }
+      .record-tip { line-height: 1.6; font-size: 10px; }
+      .digital-stage { width: 100%; min-height: 360px; }
+      .digital-name, .digital-thought { width: 100%; }
+      .upload-section { padding: 56px 16px; }
+      .upload-heading, .submission-form { width: 100%; max-width: 560px; margin-inline: auto; }
+      .upload-heading h2 { font-size: clamp(36px, 10vw, 50px); }
+      .form-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+      .field-full { grid-column: auto; }
+      .form-top { gap: 10px; flex-wrap: wrap; }
+      .dropzone-picker { padding: 22px 14px; }
+      .dropzone-picker strong { overflow-wrap: anywhere; }
+      .consent { align-items: flex-start; gap: 10px; }
+      .consent input { flex: 0 0 auto; margin-top: 3px; }
+      .submit-btn { width: 100%; }
+      .official-links { display: flex; flex-direction: column; align-items: stretch; }
+      .official-links .btn, .official-links a { width: 100%; justify-content: center; text-align: center; }
+      .footer { padding-block: 28px; text-align: center; }
+      .footer-brand { justify-content: center; }
+      .footer p { max-width: 36ch; margin-inline: auto; }
+      .certificate-dialog { width: calc(100% - 16px); padding: 18px 12px; }
+      .certificate-dialog h2 { font-size: 25px; }
+      .certificate-actions { display: grid; grid-template-columns: 1fr; }
+      .certificate-actions .btn { width: 100%; min-width: 0; }
+      .privacy-note { font-size: 12px; line-height: 1.55; }
+    }
+
+    @media (max-width: 380px) {
+      .topbar, main, .footer { width: calc(100% - 24px); }
+      .brand strong { font-size: 11px; }
+      .brand small { font-size: 8px; }
+      .top-link { font-size: 10px; }
+      .hero h1 { font-size: 39px; }
+      .hero-art { transform: scale(.94); transform-origin: top center; margin-bottom: -12px; }
+      .upload-section { padding-inline: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+
 </head>
 <body>
   <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
